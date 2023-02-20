@@ -31,7 +31,7 @@ jobs:
       - name: creating admin superuser
         run: sudo -u postgres createuser --superuser admin
       - name: seting up admin password
-        run: sudo -su postgres PGPASSWORD=admin psql -h -U admin
+        run: sudo -u postgres psql -c "ALTER USER admin PASSWORD 'admin';"
 
   setup_maven:
     needs: [setup_db]
