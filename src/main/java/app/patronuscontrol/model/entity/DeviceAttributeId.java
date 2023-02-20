@@ -1,4 +1,4 @@
-package app.patronuscontrol.model;
+package app.patronuscontrol.model.entity;
 
 import java.io.Serializable;
 

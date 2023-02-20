@@ -1,4 +1,4 @@
-package app.patronuscontrol.model;
+package app.patronuscontrol.model.entity;
 
 public enum Action {
     ON_OFF,

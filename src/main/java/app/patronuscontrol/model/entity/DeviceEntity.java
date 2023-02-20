@@ -1,4 +1,4 @@
-package app.patronuscontrol.model;
+package app.patronuscontrol.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "devices", indexes = @Index(name = "macIdx", columnList = "mac_addr"))
-public class Device {
+public class DeviceEntity {
     @Id
     private Long id;
 
@@ -21,7 +21,6 @@ public class Device {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "device_type", referencedColumnName = "id", nullable = false)
-    private SupportedDevice deviceType;
+    @Lob
+    private byte[] icon;
 }

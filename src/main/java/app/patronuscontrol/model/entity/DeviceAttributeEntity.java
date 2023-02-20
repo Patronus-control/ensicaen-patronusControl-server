@@ -1,4 +1,4 @@
-package app.patronuscontrol.model;
+package app.patronuscontrol.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,11 +9,11 @@ import lombok.Setter;
 @Entity
 @Table(name = "device_attributes")
 @IdClass(DeviceAttributeId.class)
-public class DeviceAttribute {
+public class DeviceAttributeEntity {
     @Id
     @ManyToOne
     @JoinColumn(name = "device", referencedColumnName = "id")
-    private SupportedDevice supportedDevice;
+    private DeviceEntity supportedDevice;
 
     @Id
     @Enumerated(EnumType.ORDINAL)
