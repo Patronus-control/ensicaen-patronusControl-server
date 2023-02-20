@@ -1,10 +1,14 @@
 package app.patronuscontrol.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "supported_devices")
 public class SupportedDevice {
@@ -12,10 +16,6 @@ public class SupportedDevice {
     @Id
     @GeneratedValue
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "brand", referencedColumnName = "id", nullable = false)
-    private SupportedBrand brand;
 
     @Column(nullable = false, length = 50)
     private String name;

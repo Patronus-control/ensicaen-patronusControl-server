@@ -1,7 +1,11 @@
 package app.patronuscontrol.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "devices", indexes = @Index(name = "macIdx", columnList = "mac_addr"))
 public class Device {

@@ -6,5 +6,7 @@ public class DeviceAttributeId implements Serializable {
 
     private Long supportedDevice;
 
-    private Long attribute;
+    private Action action;
+
+    private Brand brand;
 }
