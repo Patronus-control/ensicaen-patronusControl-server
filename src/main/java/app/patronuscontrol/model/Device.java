@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 @Table(name = "devices", indexes = @Index(name = "macIdx", columnList = "mac_addr"))
 public class Device {
     @Id
-    @Column(name = "coordinate", nullable = false)
+    private Long id;
+
+    @Column(name = "coordinate", nullable = true)
     private byte[] coordinate;
 
     @Column(name = "mac_addr", nullable = false, length = 17, unique = true)
