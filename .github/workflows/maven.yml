@@ -33,7 +33,7 @@ jobs:
       - name: seting up admin password
         run: sudo -u postgres psql -c "ALTER USER admin PASSWORD 'admin';"
 
-  setup_maven:
+  maven_setup_and_build:
     needs: [setup_db]
     runs-on: ubuntu-latest
     steps:
@@ -43,10 +43,5 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-
-  build_project:
-    needs: [setup_maven]
-    runs-on: ubuntu-latest
-    steps:
       - name: Build with Maven
         run: mvn --batch-mode --update-snapshots package
