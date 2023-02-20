@@ -21,6 +21,7 @@ jobs:
       - run: sudo apt update
 
   setup_db:
+    needs: [setup_runner]
     runs-on: ubuntu-latest
     steps:
       - name: installing postgres on runner
@@ -33,6 +34,7 @@ jobs:
         run: sudo -u postgres PGPASSWORD=admin psql -h -U admin
 
   setup_maven:
+    needs: [setup_db]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -43,6 +45,7 @@ jobs:
           distribution: 'temurin'
 
   build_project:
+    needs: [setup_maven]
     runs-on: ubuntu-latest
     steps:
       - name: Build with Maven
