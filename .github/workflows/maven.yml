@@ -15,14 +15,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  setup_runner:
-    runs-on: ubuntu-latest
-    steps:
-      - run: sudo apt update
-
-  setup_db:
-    needs: [setup_runner]
-    # You must use a Linux environment when using service containers or container jobs
+  setup_runner_db:
     runs-on: ubuntu-latest
     # Service containers to run with `runner-job`
     services:
@@ -43,9 +36,12 @@ jobs:
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
+    
+    steps:
+      - run: sudo apt update
 
   maven_setup_and_build:
-    needs: [setup_db]
+    needs: [setup_runner_db]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
