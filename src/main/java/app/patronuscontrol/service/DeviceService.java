@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class DeviceService {
@@ -28,8 +29,12 @@ public class DeviceService {
         return deviceRepository.findAll();
     }
 
-    public void doAction(Long id, Action action) {
-        this.deviceRepository.findById(id).ifPresent(device -> device.doAction(action));
+    public int doAction(Long id, Action action) {
+        AtomicInteger ret = new AtomicInteger(0);
+
+        this.deviceRepository.findById(id).ifPresent(device -> ret.set(device.doAction(action)));
+
+        return ret.get();
     }
 
 }

@@ -23,8 +23,8 @@ public class ObjectTypeEntity {
     private String name;
 
 
-    public void doAction(Action action, ObjectEntity objectEntity) {
-        objectAttributeEntity.doAction(action, objectEntity);
+    public int doAction(Action action, ObjectEntity objectEntity) {
+        return objectAttributeEntity.doAction(action, objectEntity);
     }
 
 

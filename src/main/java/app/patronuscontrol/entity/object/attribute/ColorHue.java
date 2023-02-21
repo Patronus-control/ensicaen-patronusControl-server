@@ -23,11 +23,13 @@ public class ColorHue extends ObjectAttributeEntity {
     }
 
     @Override
-    protected void execute(Action action, ObjectEntity objectEntity) {
+    protected boolean execute(Action action, ObjectEntity objectEntity) {
 
         Color color = (Color) action;
 
         System.out.println("Hue ON/OFF  r :" + color.getRed() + " g :" + color.getGreen() + " b :" + color.getBlue());
+
+        return true;
 
     }
 }

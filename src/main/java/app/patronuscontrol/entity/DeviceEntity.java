@@ -29,10 +29,14 @@ public class DeviceEntity {
     private List<ObjectEntity> objectEntityList;
 
 
-    public void doAction(Action action) {
+    public int doAction(Action action) {
+        int nb_failed = 0;
+
         for(ObjectEntity objectEntity: objectEntityList) {
-            objectEntity.doAction(action);
+            nb_failed += objectEntity.doAction(action);
         }
+
+        return nb_failed;
     }
 
 

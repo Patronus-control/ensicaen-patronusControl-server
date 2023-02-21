@@ -20,8 +20,8 @@ public abstract class ObjectEntity {
     private ObjectTypeEntity objectTypeEntity;
 
 
-    public void doAction(Action action) {
-        objectTypeEntity.doAction(action, this);
+    public int doAction(Action action) {
+        return objectTypeEntity.doAction(action, this);
     }
 
 

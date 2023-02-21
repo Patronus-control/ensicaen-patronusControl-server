@@ -37,15 +37,22 @@ public abstract class ObjectAttributeEntity {
     }
 
 
-    protected abstract void execute(Action action, ObjectEntity objectEntity);
+    protected abstract boolean execute(Action action, ObjectEntity objectEntity);
 
-    public void doAction(Action action, ObjectEntity objectEntity) {
+    public int doAction(Action action, ObjectEntity objectEntity) {
+        int ret = 0;
+
         if(action.getAttribute() == attribute) {
-            execute(action, objectEntity);
+            if(execute(action, objectEntity)) {
+                ret = 1;
+            }
         }
+
         if(objectAttributeEntity != null) {
-            objectAttributeEntity.doAction(action, objectEntity);
+            ret += objectAttributeEntity.doAction(action, objectEntity);
         }
+
+        return ret;
     }
 
 

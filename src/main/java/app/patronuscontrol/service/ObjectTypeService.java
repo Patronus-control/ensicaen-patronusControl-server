@@ -1,5 +1,6 @@
 package app.patronuscontrol.service;
 
+import app.patronuscontrol.entity.DeviceEntity;
 import app.patronuscontrol.entity.object.attribute.OnOffLegrand;
 import app.patronuscontrol.entity.object.type.ObjectTypeEntity;
 import app.patronuscontrol.entity.object.attribute.ColorHue;
@@ -23,11 +24,16 @@ public class ObjectTypeService {
     }
 
     public void testMethod() {
+        DeviceEntity device = new DeviceEntity();
+
         OnOffHue onOffHue = new OnOffHue(null);
         ColorHue colorHue = new ColorHue(onOffHue);
+
         ObjectTypeEntity lampeHUE = new ObjectTypeEntity();
+
         lampeHUE.setObjectAttributeEntity(colorHue);
         lampeHUE.setName("Lampe HUE");
+
         objectTypeRepository.save(lampeHUE);
 
 

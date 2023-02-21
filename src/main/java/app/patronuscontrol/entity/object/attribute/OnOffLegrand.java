@@ -26,7 +26,9 @@ public class OnOffLegrand extends ObjectAttributeEntity {
 
 
     @Override
-    protected void execute(Action action, ObjectEntity objectEntity) {
+    protected boolean execute(Action action, ObjectEntity objectEntity) {
         System.out.println("Hue ON/OFF  state :" + ((OnOff)action).isState());
+
+        return true;
     }
 }

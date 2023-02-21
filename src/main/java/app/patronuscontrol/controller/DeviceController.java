@@ -39,9 +39,16 @@ public class DeviceController {
         return deviceService.findByMacAddr(macAddr).map(DeviceEntity::toDTO).orElse(null);
     }
 
+    /**
+     * Execute an action
+     *
+     * @param action Action to execute
+     * @param id Device which will execute the action
+     * @return Number of failed actions
+     */
     @PostMapping(value = "/action/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    void doAction(@PathVariable Long id, @RequestBody Action action) {
-        deviceService.doAction(id, action);
+    int doAction(@PathVariable Long id, @RequestBody Action action) {
+        return deviceService.doAction(id, action);
     }
 
     /**
@@ -54,7 +61,5 @@ public class DeviceController {
     DeviceDTO createDevice(@RequestBody DeviceDTO device) {
         return deviceService.createDevice(device.toEntity()).toDTO();
     }
-
-
 
 }
