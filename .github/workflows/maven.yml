@@ -39,6 +39,8 @@ jobs:
     
     steps:
       - run: sudo apt update
+      - name: creating application db
+        run: createdb patronus_db
 
   maven_setup_and_build:
     needs: [setup_runner_db]
