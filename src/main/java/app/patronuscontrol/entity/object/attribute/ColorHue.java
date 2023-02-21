@@ -1,17 +1,18 @@
-package app.patronuscontrol.entity.deviceattribute;
+package app.patronuscontrol.entity.object.attribute;
 
-import app.patronuscontrol.entity.Attribute;
-import app.patronuscontrol.entity.Brand;
+import app.patronuscontrol.entity.object.ObjectEntity;
+import app.patronuscontrol.entity.object.attribute.enums.Attribute;
+import app.patronuscontrol.entity.object.attribute.enums.Brand;
 import app.patronuscontrol.model.action.Action;
 import app.patronuscontrol.model.action.Color;
 import jakarta.persistence.Entity;
 
 @Entity
-public class ColorHue extends DeviceAttributeEntity {
+public class ColorHue extends ObjectAttributeEntity {
 
 
-    public ColorHue(DeviceAttributeEntity deviceAttribute) {
-        super(deviceAttribute);
+    public ColorHue(ObjectAttributeEntity objectAttributeEntity) {
+        super(objectAttributeEntity);
         this.setBrand(Brand.PHILIPS);
         this.setAttribute(Attribute.COLOR_CHANGE);
     }
@@ -22,7 +23,7 @@ public class ColorHue extends DeviceAttributeEntity {
     }
 
     @Override
-    protected void execute(Action action) {
+    protected void execute(Action action, ObjectEntity objectEntity) {
 
         Color color = (Color) action;
 

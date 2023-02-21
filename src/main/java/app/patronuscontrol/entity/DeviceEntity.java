@@ -1,10 +1,13 @@
 package app.patronuscontrol.entity;
 
+import app.patronuscontrol.entity.object.ObjectEntity;
 import app.patronuscontrol.model.action.Action;
 import app.patronuscontrol.model.dto.DeviceDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,14 +25,13 @@ public class DeviceEntity {
     @Lob
     private byte[] icon;
 
-
-    @OneToOne
-    private DeviceTypeEntity deviceTypeEntity;
+    @ManyToMany
+    private List<ObjectEntity> objectEntityList;
 
 
     public void doAction(Action action) {
-        if (deviceTypeEntity != null) {
-            deviceTypeEntity.doAction(action);
+        for(ObjectEntity objectEntity: objectEntityList) {
+            objectEntity.doAction(action);
         }
     }
 
