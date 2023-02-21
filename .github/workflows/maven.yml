@@ -15,7 +15,8 @@ on:
     branches: [ "master" ]
 
 jobs:
-  setup_runner_db:
+  maven_build_test:
+    needs: [setup_runner_db]
     runs-on: ubuntu-latest
     # Service containers to run with `runner-job`
     services:
@@ -37,16 +38,9 @@ jobs:
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432
-    
     steps:
-      - run: sudo apt update
       - name: checking db is up
         run: pg_isready -h localhost -p 5432
-
-  maven_setup_and_build:
-    needs: [setup_runner_db]
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@v3
       - name: Set up JDK 17
         uses: actions/setup-java@v3
