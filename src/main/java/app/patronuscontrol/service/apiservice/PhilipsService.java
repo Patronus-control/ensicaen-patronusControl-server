@@ -16,7 +16,7 @@ public class PhilipsService extends BasicApiService{
 
     @Autowired
     public PhilipsService(@Value("${philips.endpoint}") String endpoint, @Value("${philips.auth-token}") String authToken) {
-        super(endpoint);
+        this.endpoint = endpoint;
         this.authToken = authToken;
     }
 
@@ -50,6 +50,6 @@ public class PhilipsService extends BasicApiService{
         Map<Object, Object> values = new HashMap<>();
         values.put("on", state);
 
-        this.sendHttpRequest(values, this.endpoint + "/api/" + authToken + "/lights/" + id + "/state", "PUT");
+        this.sendHttpRequest(values, "/api/" + authToken + "/lights/" + id + "/state", "PUT");
     }
 }
