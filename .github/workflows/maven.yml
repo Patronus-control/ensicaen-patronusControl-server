@@ -16,7 +16,6 @@ on:
 
 jobs:
   maven_build_test:
-    needs: [setup_runner_db]
     runs-on: ubuntu-latest
     # Service containers to run with `runner-job`
     services:
