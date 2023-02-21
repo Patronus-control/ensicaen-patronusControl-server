@@ -1,0 +1,60 @@
+@startuml
+
+
+abstract class DeviceAttribute {
+    + action(DeviceAction)
+    - abstract execute(DeviceAction)
+    + abstract getAttributeDeviceType()
+}
+
+
+enum DeviceAttributeEnum {
+ ONOFF,
+ COLOR,
+
+}
+
+class OnOffHue extends DeviceAttribute {
+
+
+}
+
+class OnOffLegrand extends DeviceAttribute {
+
+
+}
+
+
+class ColorHue extends DeviceAttribute {
+
+
+}
+
+DeviceAttributeEnum - DeviceAttribute
+DeviceAttributeEnum -- DeviceAction
+abstract class DeviceAction {
+
+abstract getAttributeDeviceType()
+}
+
+
+class ActionOnOff extends DeviceAction{
+ state
+}
+
+class ActionColor extends DeviceAction{
+ red,
+ blue,
+ green,
+}
+
+class Device {
+  callAction(DeviceAction)
+
+}
+
+DeviceAttribute -* Device
+DeviceAttribute -o DeviceAttribute
+
+
+@enduml

@@ -1,4 +1,4 @@
-package app.patronuscontrol.model.entity;
+package app.patronuscontrol.entity;
 
 public enum Brand {
     PHILIPS,
