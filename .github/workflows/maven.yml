@@ -27,6 +27,7 @@ jobs:
         env:
           POSTGRES_USER: admin
           POSTGRES_PASSWORD: admin
+          POSTGRES_DB: patronus_db
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -39,8 +40,6 @@ jobs:
     
     steps:
       - run: sudo apt update
-      - name: creating application db
-        run: createdb patronus_db
 
   maven_setup_and_build:
     needs: [setup_runner_db]
