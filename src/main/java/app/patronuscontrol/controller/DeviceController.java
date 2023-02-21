@@ -1,6 +1,7 @@
 package app.patronuscontrol.controller;
 
 import app.patronuscontrol.entity.DeviceEntity;
+import app.patronuscontrol.model.action.Action;
 import app.patronuscontrol.model.dto.DeviceDTO;
 import app.patronuscontrol.service.DeviceService;
 import org.springframework.http.MediaType;
@@ -19,6 +20,7 @@ public class DeviceController {
 
     /**
      * Get All Devices
+     *
      * @return List<DeviceDTO>
      */
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,17 +30,23 @@ public class DeviceController {
 
     /**
      * Get Device by mac address
+     *
      * @param macAddr mac address
      * @return DeviceDTO
      */
-    @GetMapping(value= "/macAddr/{macAddr}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/macAddr/{macAddr}", produces = MediaType.APPLICATION_JSON_VALUE)
     DeviceDTO getDeviceByMacAddr(@PathVariable String macAddr) {
         return deviceService.findByMacAddr(macAddr).map(DeviceEntity::toDTO).orElse(null);
     }
 
+    @PostMapping(value = "/action/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    void doAction(@PathVariable Long id, @RequestBody Action action) {
+        deviceService.doAction(id, action);
+    }
 
     /**
      * Create a new device
+     *
      * @param device device to create
      * @return DeviceDTO
      */
@@ -46,5 +54,7 @@ public class DeviceController {
     DeviceDTO createDevice(@RequestBody DeviceDTO device) {
         return deviceService.createDevice(device.toEntity()).toDTO();
     }
+
+
 
 }

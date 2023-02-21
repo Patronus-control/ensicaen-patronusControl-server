@@ -1,6 +1,7 @@
 package app.patronuscontrol.service;
 
 import app.patronuscontrol.entity.DeviceEntity;
+import app.patronuscontrol.model.action.Action;
 import app.patronuscontrol.repository.DeviceRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,4 +27,9 @@ public class DeviceService {
     public List<DeviceEntity> getAllDevices() {
         return deviceRepository.findAll();
     }
+
+    public void doAction(Long id, Action action) {
+        this.deviceRepository.findById(id).ifPresent(device -> device.doAction(action));
+    }
+
 }

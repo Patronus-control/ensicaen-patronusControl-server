@@ -2,6 +2,7 @@ package app.patronuscontrol.entity.object;
 
 import app.patronuscontrol.entity.object.type.ObjectTypeEntity;
 import app.patronuscontrol.model.action.Action;
+import app.patronuscontrol.model.dto.object.ObjectDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,4 +24,6 @@ public abstract class ObjectEntity {
         objectTypeEntity.doAction(action, this);
     }
 
+
+    public abstract ObjectDTO toDTO();
 }
