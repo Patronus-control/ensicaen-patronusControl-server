@@ -1,14 +1,13 @@
 package app.patronuscontrol.model.contract;
 
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.client.HttpStatusCodeException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.BufferedReader;
-import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Map;
 
 public class BrandContract {
     protected String endpoint;
@@ -17,32 +16,28 @@ public class BrandContract {
         this.endpoint = endpoint;
     }
 
-    protected String sendRequest(String urlComplement, String requestMethod) throws Exception {
-        URL obj = new URL(this.endpoint + urlComplement);
-        HttpURLConnection httpURLConnection = (HttpURLConnection) obj.openConnection();
-
-        return this.sendRequest(requestMethod, httpURLConnection);
+    public String sendHttpRequest(String url, String method) throws IOException, InterruptedException {
+        return this.sendHttpRequest(null, url, method);
     }
 
-    protected String sendRequest(String requestMethod, HttpURLConnection httpURLConnection) throws Exception {
-        httpURLConnection.setRequestMethod(requestMethod);
-        int responseCode = httpURLConnection.getResponseCode();
+    public String sendHttpRequest(Map<Object, Object> values, String url, String method) throws IOException, InterruptedException {
+        var objectMapper = new ObjectMapper();
 
-        StringBuffer response = new StringBuffer();
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder().uri(URI.create(this.endpoint + url));
 
-        if (responseCode == HttpURLConnection.HTTP_OK) { // success
-            BufferedReader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
-            String inputLine;
+        if ("PUT".equalsIgnoreCase(method)) {
+            if(values != null) {
+                String requestBody = objectMapper.writeValueAsString(values);
+                requestBuilder.PUT(HttpRequest.BodyPublishers.ofString(requestBody));
+            }
+        } else if ("GET".equalsIgnoreCase(method)) {
+            requestBuilder.GET();
+        } // Add more HTTP methods as needed
 
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            } in .close();
-        } else {
-            throw new Exception("GET Failed");
-        }
+        HttpRequest request = requestBuilder.build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(response);
-
-        return response.toString();
+        return response.body();
     }
 }

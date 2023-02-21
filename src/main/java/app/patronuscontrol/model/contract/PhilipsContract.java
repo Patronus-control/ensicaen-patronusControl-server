@@ -1,17 +1,11 @@
 package app.patronuscontrol.model.contract;
 
 import app.patronuscontrol.model.contract.philips.HueLight;
-import io.swagger.v3.core.util.Json;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class PhilipsContract extends BrandContract{
     private String authToken;
@@ -22,12 +16,8 @@ public class PhilipsContract extends BrandContract{
         this.authToken = authToken;
     }
 
-    public PhilipsContract(String endpoint) {
-        super(endpoint);
-    }
-
-    public List<HueLight> getAllLights() throws Exception {
-        String result = this.sendRequest("/api/" + authToken + "/lights", "GET");
+    public List<HueLight> getAllLights() throws IOException, InterruptedException, JSONException {
+        String result = this.sendHttpRequest("/api/" + authToken + "/lights", "GET");
 
         ArrayList<HueLight> ret = new ArrayList<>();
 
@@ -42,28 +32,20 @@ public class PhilipsContract extends BrandContract{
         return ret;
     }
 
-    public HueLight getLight(int id) throws Exception {
-        String result = this.sendRequest("/api/" + authToken + "/lights/" + id, "GET");
+    public HueLight getLight(int id) throws IOException, InterruptedException, JSONException {
+        String result = this.sendHttpRequest("/api/" + authToken + "/lights/" + id, "GET");
 
         return new HueLight(new JSONObject(result));
     }
 
-    public boolean isLightOn(int id) throws Exception {
+    public boolean isLightOn(int id) throws IOException, InterruptedException, JSONException {
         return this.getLight(id).isOn();
     }
 
-    public void setLightOn(int id, boolean state) throws Exception {
-        URL obj = new URL(this.endpoint + "/api/" + authToken + "/lights/" + id + "/" + state);
-        HttpURLConnection httpCon = (HttpURLConnection) obj.openConnection();
-        httpCon.setDoOutput(true);
+    public void setLightOn(int id, boolean state) throws IOException, InterruptedException {
+        Map<Object, Object> values = new HashMap<>();
+        values.put("on", state);
 
-        OutputStream os = httpCon.getOutputStream();
-        OutputStreamWriter osw = new OutputStreamWriter(os, "UTF-8");
-        osw.write("{\"attribute\": \"ON_OFF\", \"state\": false}");
-        osw.flush();
-        osw.close();
-        os.close();
-
-        this.sendRequest("PUT", httpCon);
+        this.sendHttpRequest(values, "/api/" + authToken + "/lights/" + id + "/state", "PUT");
     }
 }
