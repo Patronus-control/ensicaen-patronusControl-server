@@ -16,21 +16,15 @@ public class BrandContract {
     public BrandContract(String endpoint) {
         this.endpoint = endpoint;
     }
-/*
-    protected String sendRequest(String urlComplement, String requestMethod, HttpURLConnection customizedCon) throws Exception {
 
+    protected String sendRequest(String urlComplement, String requestMethod) throws Exception {
+        URL obj = new URL(this.endpoint + urlComplement);
+        HttpURLConnection httpURLConnection = (HttpURLConnection) obj.openConnection();
+
+        return this.sendRequest(requestMethod, httpURLConnection);
     }
-*/
-    protected String sendRequest(String urlComplement, String requestMethod, HttpURLConnection customizedCon) throws Exception {
-        HttpURLConnection httpURLConnection;
 
-        if(customizedCon == null) {
-            URL obj = new URL(this.endpoint + urlComplement);
-            httpURLConnection = (HttpURLConnection) obj.openConnection();
-        } else {
-            httpURLConnection = customizedCon;
-        }
-
+    protected String sendRequest(String requestMethod, HttpURLConnection httpURLConnection) throws Exception {
         httpURLConnection.setRequestMethod(requestMethod);
         int responseCode = httpURLConnection.getResponseCode();
 

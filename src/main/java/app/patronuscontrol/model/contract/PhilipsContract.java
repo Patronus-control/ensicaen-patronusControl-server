@@ -27,7 +27,7 @@ public class PhilipsContract extends BrandContract{
     }
 
     public List<HueLight> getAllLights() throws Exception {
-        String result = this.sendRequest("/api/" + authToken + "/lights", "GET", null);
+        String result = this.sendRequest("/api/" + authToken + "/lights", "GET");
 
         ArrayList<HueLight> ret = new ArrayList<>();
 
@@ -43,7 +43,7 @@ public class PhilipsContract extends BrandContract{
     }
 
     public HueLight getLight(int id) throws Exception {
-        String result = this.sendRequest("/api/" + authToken + "/lights/" + id, "GET", null);
+        String result = this.sendRequest("/api/" + authToken + "/lights/" + id, "GET");
 
         return new HueLight(new JSONObject(result));
     }
@@ -64,6 +64,6 @@ public class PhilipsContract extends BrandContract{
         osw.close();
         os.close();
 
-        this.sendRequest("", "PUT", httpCon);
+        this.sendRequest("PUT", httpCon);
     }
 }
