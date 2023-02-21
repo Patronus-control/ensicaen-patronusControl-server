@@ -1,17 +1,20 @@
 package app.patronuscontrol.model.action;
 
 import app.patronuscontrol.entity.object.attribute.enums.Attribute;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class OnOff implements Action {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class OnOff extends Action {
 
-    private final boolean state;
+    private boolean state;
 
 
-    public OnOff(boolean state) {
-        this.state = state;
-    }
 
     @Override
     public Attribute getAttribute() {
