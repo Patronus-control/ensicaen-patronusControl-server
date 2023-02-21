@@ -40,7 +40,8 @@ jobs:
     
     steps:
       - run: sudo apt update
-      - run: systemctl status
+      - name: checking db is up
+        run: pg_isready -h localhost -p 5432
 
   maven_setup_and_build:
     needs: [setup_runner_db]
