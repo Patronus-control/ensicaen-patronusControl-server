@@ -1,17 +1,21 @@
-package app.patronuscontrol.model.contract;
+package app.patronuscontrol.service.apiservice;
 
 import app.patronuscontrol.model.contract.philips.HueLight;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.*;
 
-public class PhilipsContract extends BrandContract{
-    private String authToken;
+@Service
+public class PhilipsService extends BasicApiService{
+    private final String authToken;
 
-
-    public PhilipsContract(String endpoint, String authToken) {
+    @Autowired
+    public PhilipsService(@Value("${philips.endpoint}") String endpoint, @Value("${philips.auth-token}") String authToken) {
         super(endpoint);
         this.authToken = authToken;
     }
@@ -46,6 +50,6 @@ public class PhilipsContract extends BrandContract{
         Map<Object, Object> values = new HashMap<>();
         values.put("on", state);
 
-        this.sendHttpRequest(values, "/api/" + authToken + "/lights/" + id + "/state", "PUT");
+        this.sendHttpRequest(values, this.endpoint + "/api/" + authToken + "/lights/" + id + "/state", "PUT");
     }
 }

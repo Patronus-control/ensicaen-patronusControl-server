@@ -1,6 +1,9 @@
-package app.patronuscontrol.model.contract;
+package app.patronuscontrol.service.apiservice;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.net.URI;
@@ -9,10 +12,13 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Map;
 
-public class BrandContract {
+@Service
+public class BasicApiService {
+
     protected String endpoint;
 
-    public BrandContract(String endpoint) {
+    @Autowired
+    public BasicApiService(@Value("${api.endpoint}") String endpoint) {
         this.endpoint = endpoint;
     }
 
