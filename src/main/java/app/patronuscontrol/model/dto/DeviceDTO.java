@@ -5,6 +5,9 @@ import app.patronuscontrol.entity.DeviceEntity;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Map;
+
+
 @Getter
 @Setter
 public class DeviceDTO {
@@ -16,6 +19,9 @@ public class DeviceDTO {
     private String name;
 
     private byte[] icon;
+
+    private Map<String, Object> stateList;
+
 
     public DeviceEntity toEntity() {
         DeviceEntity deviceEntity = new DeviceEntity();

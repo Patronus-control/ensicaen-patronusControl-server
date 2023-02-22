@@ -49,5 +49,14 @@ public class DeviceEntity {
         return deviceDTO;
     }
 
+    public DeviceDTO toDTO(boolean withState) {
+        DeviceDTO deviceDTO = new DeviceDTO();
+        if(withState) {
+            // TODO
+           // deviceDTO.setStateList(this.getStateList());
+        }
+        return deviceDTO;
+    }
+
 
 }
