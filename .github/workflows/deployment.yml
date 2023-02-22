@@ -1,6 +1,6 @@
 name: deployment to rasberry pi
 
-concurency:
+concurrency:
   group: production
   cancel-in-progress: true
 
