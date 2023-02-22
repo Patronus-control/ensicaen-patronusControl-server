@@ -1,6 +1,7 @@
 package app.patronuscontrol.entity.object.attribute;
 
 import app.patronuscontrol.configuration.AppConfig;
+import app.patronuscontrol.entity.object.HueObject;
 import app.patronuscontrol.entity.object.ObjectEntity;
 import app.patronuscontrol.entity.object.attribute.enums.Attribute;
 import app.patronuscontrol.entity.object.attribute.enums.Brand;
@@ -41,7 +42,7 @@ public class OnOffHue extends ObjectAttributeEntity {
         OnOff specialisezAction = (OnOff) action;
 
         try {
-            philipsService.setLightOn(1, specialisezAction.isState());
+            philipsService.setLightOn(((HueObject) objectEntity).getHueId(), specialisezAction.isState());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class OnOff extends Action {
 
-    private boolean state;
+    private boolean on;
 
 
 
