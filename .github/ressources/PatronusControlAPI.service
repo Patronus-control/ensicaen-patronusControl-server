@@ -1,0 +1,9 @@
+[Unit]
+Description=Service used to start the API service used by Patronus control (https://github.com/LEBOCQTitouan/ensicaen-patronusControl-server)
+After=syslog.target
+[Service]
+User=ubuntu
+ExecStart=/usr/bin/java -jar /var/springApp/pc-server-0.0.1-SNAPSHOT.war
+SuccessExitStatus=143
+[Install]
+WantedBy=multi-user.target

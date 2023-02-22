@@ -1,0 +1,39 @@
+name: deployment to rasberry pi
+
+concurency:
+  group: production
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build_and_packaging:
+    runs-on: rasberry-pi-antoine
+    environment: production
+    steps:
+      - name: disabling patronus service
+        run: sudo systemctl stop PatronusControlAPI
+      - name: checking db is up
+        run: pg_isready -h localhost -p 5432
+      - name: Checkout repo code
+        uses: actions/checkout@v3
+      - name: maven deps caching
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Build with Maven
+        run: mvn package war:war --file pom.xml
+      # based on https://medium.com/geekculture/turn-your-raspberry-pi-into-a-server-to-run-your-java-spring-mvc-app-862214279587
+      - name: setup var files
+        run: sudo rm -rfv /var/springApp && sudo mkdir /var/springApp && sudo mv ~/pc-server-0.0.1-SNAPSHOT.war /var/springApp/
+      - name: deleting service
+        run: sudo rm -f /etc/systemd/system/patronusCtl.service
+      - name: creating service file
+        run: sudo mv .github/ressources/PatronusControlAPI.service /etc/systemd/system/
+      - name: starting service
+        run: sudo systemctl start PatronusControlAPI
