@@ -12,7 +12,7 @@ public class HueObjectDTO extends ObjectDTO {
     private int hueId;
 
     @Override
-    HueObject toEntity() {
+    public HueObject toEntity() {
         HueObject hueObject = new HueObject();
         hueObject.setId(this.getId());
         hueObject.setHueId(this.getHueId());

@@ -12,7 +12,7 @@ public abstract class ObjectDTO {
     private String idObjectType;
 
 
-    abstract Object toEntity();
+    public abstract Object toEntity();
 
 
 

@@ -49,4 +49,5 @@ public class DeviceEntity {
         return deviceDTO;
     }
 
+
 }

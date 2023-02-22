@@ -1,8 +1,10 @@
 package app.patronuscontrol.controller;
 
 import app.patronuscontrol.entity.DeviceEntity;
+import app.patronuscontrol.entity.object.ObjectEntity;
 import app.patronuscontrol.model.action.Action;
 import app.patronuscontrol.model.dto.DeviceDTO;
+import app.patronuscontrol.model.dto.object.ObjectDTO;
 import app.patronuscontrol.service.DeviceService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -61,5 +63,23 @@ public class DeviceController {
     DeviceDTO createDevice(@RequestBody DeviceDTO device) {
         return deviceService.createDevice(device.toEntity()).toDTO();
     }
+
+
+    @GetMapping(value= "/get-object/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    Iterable<ObjectDTO> getObjects(@PathVariable Long id) {
+        return deviceService.getObjects(id).stream().map(ObjectEntity::toDTO).toList();
+    }
+
+
+    @PostMapping(value= "/add-object/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    void addObject(@PathVariable Long id, @RequestBody Long objectID) {
+        deviceService.addObject(id, objectID);
+    }
+
+    @PostMapping(value= "/remove-object/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    void removeObject(@PathVariable Long id, @RequestBody Long objectID) {
+        deviceService.removeObject(id, objectID);
+    }
+
 
 }

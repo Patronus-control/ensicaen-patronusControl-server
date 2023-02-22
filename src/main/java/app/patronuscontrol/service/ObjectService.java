@@ -37,8 +37,8 @@ public class ObjectService {
      * @param id id of object
      * @return ObjectEntity
      */
-    public ObjectEntity getObjectById(Long id) {
-        return objectRepository.findById(id).orElse(null);
+    public Optional<ObjectEntity> getObjectById(Long id) {
+        return objectRepository.findById(id);
     }
 
     public void createObjectTest() {

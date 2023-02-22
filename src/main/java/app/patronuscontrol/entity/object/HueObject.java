@@ -19,4 +19,5 @@ public class HueObject extends ObjectEntity {
         return hueObjectDTO;
     }
 
+
 }

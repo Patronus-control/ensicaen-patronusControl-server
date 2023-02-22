@@ -27,6 +27,12 @@ public class ObjectTypeEntity {
         return objectAttributeEntity.doAction(action, objectEntity);
     }
 
+    public void setState() {
+        if(objectAttributeEntity != null) {
+            objectAttributeEntity.setState();
+        }
+    }
+
 
 
 }

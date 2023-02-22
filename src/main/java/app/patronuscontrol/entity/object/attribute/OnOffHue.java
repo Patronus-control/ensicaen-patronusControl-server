@@ -14,6 +14,9 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 @Entity
 public class OnOffHue extends ObjectAttributeEntity {
 
+    private boolean on;
+
+
     public OnOffHue(ObjectAttributeEntity objectAttributeEntity) {
         super(objectAttributeEntity);
         this.setBrand(Brand.PHILIPS);
@@ -54,5 +57,10 @@ public class OnOffHue extends ObjectAttributeEntity {
 
         System.out.println("Hue ON/OFF  state :" + specialisezAction.isState());
         return true;
+    }
+
+    @Override
+    protected void udpateState() {
+
     }
 }

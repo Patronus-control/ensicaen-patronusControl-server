@@ -12,7 +12,7 @@ public class LegrandDTO extends ObjectDTO {
 
 
     @Override
-    LegrandObject toEntity() {
+    public LegrandObject toEntity() {
         LegrandObject legrandObject = new LegrandObject();
         legrandObject.setId(this.getId());
         legrandObject.setIp(this.getIp());

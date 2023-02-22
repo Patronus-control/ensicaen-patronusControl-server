@@ -32,4 +32,9 @@ public class ColorHue extends ObjectAttributeEntity {
         return true;
 
     }
+
+    @Override
+    protected void udpateState() {
+
+    }
 }

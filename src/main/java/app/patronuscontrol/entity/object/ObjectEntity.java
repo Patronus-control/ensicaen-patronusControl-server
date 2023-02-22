@@ -26,4 +26,11 @@ public abstract class ObjectEntity {
 
 
     public abstract ObjectDTO toDTO();
+
+
+    void setState() {
+        if(objectTypeEntity != null) {
+            objectTypeEntity.setState();
+        }
+    }
 }

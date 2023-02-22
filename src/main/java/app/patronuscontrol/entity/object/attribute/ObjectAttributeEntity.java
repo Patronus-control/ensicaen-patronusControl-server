@@ -55,6 +55,14 @@ public abstract class ObjectAttributeEntity {
         return ret;
     }
 
+    abstract protected void udpateState();
+
+    public void setState() {
+
+        if(objectAttributeEntity != null) {
+            objectAttributeEntity.setState();
+        }
+    }
 
 
 }
