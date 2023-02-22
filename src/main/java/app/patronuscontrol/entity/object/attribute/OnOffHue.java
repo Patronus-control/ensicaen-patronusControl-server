@@ -8,12 +8,14 @@ import app.patronuscontrol.model.action.Action;
 import app.patronuscontrol.model.action.OnOff;
 import app.patronuscontrol.service.apiservice.PhilipsService;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 @Entity
 public class OnOffHue extends ObjectAttributeEntity {
 
+    @Transient
     private boolean on;
 
 
@@ -45,9 +47,9 @@ public class OnOffHue extends ObjectAttributeEntity {
             return false;
         }
 
-        if(actualState != specialisezAction.isState()) {
+        if(actualState != specialisezAction.isOn()) {
             try {
-                philipsService.setLightOn(1, specialisezAction.isState());
+                philipsService.setLightOn(1, specialisezAction.isOn());
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 return false;
@@ -55,7 +57,7 @@ public class OnOffHue extends ObjectAttributeEntity {
 
         }
 
-        System.out.println("Hue ON/OFF  state :" + specialisezAction.isState());
+        System.out.println("Hue ON/OFF  state :" + specialisezAction.isOn());
         return true;
     }
 
