@@ -1,7 +1,10 @@
 package app.patronuscontrol.service.apiservice;
 
+import app.patronuscontrol.entity.object.HueObject;
 import app.patronuscontrol.entity.object.attribute.enums.Attribute;
+import app.patronuscontrol.entity.object.type.ObjectTypeEntity;
 import app.patronuscontrol.model.contract.philips.HueLight;
+import app.patronuscontrol.service.ObjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -17,18 +20,33 @@ public class PhilipsService extends BasicApiService{
 
     @Autowired
     public PhilipsService(@Value("${philips.endpoint}") String endpoint, @Value("${philips.auth-token}") String authToken) {
+        super();
         this.endpoint = endpoint;
         this.authToken = authToken;
     }
 
-    public void initializeNetworkObjects() {
+    public void initializeNetworkObjects(ObjectService objectService) {
+        List<HueLight> allLights;
+
         try {
-            List<HueLight> allLights = getAllLights();
+            allLights = getAllLights();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
+        for(HueLight light : allLights) {
+            if(objectService.getHueObject(light.getId()) == null) {
+                ObjectTypeEntity ote = new ObjectTypeEntity();
+                ote.setObjectAttributeEntity(light.getAttribute());
+                objectService.getObjectTypeRepository().save(ote);
 
+                HueObject hueObj = new HueObject();
+                hueObj.setHueId(light.getId());
+                hueObj.setObjectTypeEntity(ote);
+                hueObj.setName(light.getName());
+                objectService.getObjectRepository().save(hueObj);
+            }
+        }
     }
 
     public List<HueLight> getAllLights() throws IOException, InterruptedException, JSONException {
@@ -41,7 +59,7 @@ public class PhilipsService extends BasicApiService{
 
         while (i.hasNext()){
             String key = i.next();
-            ret.add(new HueLight(allData.getJSONObject(key)));
+            ret.add(new HueLight(allData.getJSONObject(key), Integer.parseInt(key)));
         }
 
         return ret;

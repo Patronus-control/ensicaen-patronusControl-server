@@ -24,9 +24,6 @@ public class ObjectTypeEntity {
     private Long id;
 
 
-    private String name;
-
-
     public int doAction(Action action, ObjectEntity objectEntity) {
         return objectAttributeEntity.doAction(action, objectEntity);
     }

@@ -6,10 +6,12 @@ import app.patronuscontrol.entity.object.attribute.enums.Brand;
 import app.patronuscontrol.model.action.Action;
 import app.patronuscontrol.model.action.Color;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Transient;
 
 @Entity
 public class ColorHue extends ObjectAttributeEntity {
-
+    @Transient
+    private java.awt.Color color;
 
     public ColorHue(ObjectAttributeEntity objectAttributeEntity) {
         super(objectAttributeEntity);

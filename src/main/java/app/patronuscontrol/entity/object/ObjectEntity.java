@@ -23,6 +23,8 @@ public abstract class ObjectEntity {
     @OneToOne
     private ObjectTypeEntity objectTypeEntity;
 
+    @Column
+    private String name;
 
     public int doAction(Action action) {
         return objectTypeEntity.doAction(action, this);

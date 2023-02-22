@@ -32,7 +32,6 @@ public class ObjectTypeService {
         ObjectTypeEntity lampeHUE = new ObjectTypeEntity();
 
         lampeHUE.setObjectAttributeEntity(colorHue);
-        lampeHUE.setName("Lampe HUE");
 
         objectTypeRepository.save(lampeHUE);
 
@@ -40,7 +39,6 @@ public class ObjectTypeService {
         OnOffLegrand onOffLegrand = new OnOffLegrand(null);
         ObjectTypeEntity prise = new ObjectTypeEntity();
         prise.setObjectAttributeEntity(onOffLegrand);
-        prise.setName("Prise Legrand");
         objectTypeRepository.save(prise);
 
 
