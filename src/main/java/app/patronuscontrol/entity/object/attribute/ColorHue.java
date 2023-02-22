@@ -34,7 +34,7 @@ public class ColorHue extends ObjectAttributeEntity {
     }
 
     @Override
-    protected void udpateState() {
-
+    public Object getState() {
+        return new java.awt.Color(0,0,0);
     }
 }

@@ -2,6 +2,7 @@ package app.patronuscontrol.model.dto;
 
 
 import app.patronuscontrol.entity.DeviceEntity;
+import app.patronuscontrol.entity.object.attribute.enums.Attribute;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +21,7 @@ public class DeviceDTO {
 
     private byte[] icon;
 
-    private Map<String, Object> stateList;
+    private Map<Attribute, Object> stateList;
 
 
     public DeviceEntity toEntity() {

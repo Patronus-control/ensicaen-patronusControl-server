@@ -1,9 +1,13 @@
 package app.patronuscontrol.entity.object;
 
+import app.patronuscontrol.entity.object.attribute.enums.Attribute;
 import app.patronuscontrol.model.dto.object.HueObjectDTO;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -18,6 +22,4 @@ public class HueObject extends ObjectEntity {
         hueObjectDTO.setHueId(this.getHueId());
         return hueObjectDTO;
     }
-
-
 }

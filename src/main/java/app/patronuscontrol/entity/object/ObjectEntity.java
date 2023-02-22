@@ -1,11 +1,15 @@
 package app.patronuscontrol.entity.object;
 
+import app.patronuscontrol.entity.object.attribute.enums.Attribute;
 import app.patronuscontrol.entity.object.type.ObjectTypeEntity;
 import app.patronuscontrol.model.action.Action;
 import app.patronuscontrol.model.dto.object.ObjectDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -27,10 +31,17 @@ public abstract class ObjectEntity {
 
     public abstract ObjectDTO toDTO();
 
-
-    void setState() {
+    void setState(Object state) {
         if(objectTypeEntity != null) {
-            objectTypeEntity.setState();
+            objectTypeEntity.setState(state);
         }
+    }
+
+    public Map<Attribute, Object> getStateList() {
+        if(objectTypeEntity != null) {
+            return objectTypeEntity.getStateList();
+        }
+
+        return new EnumMap<>(Attribute.class);
     }
 }

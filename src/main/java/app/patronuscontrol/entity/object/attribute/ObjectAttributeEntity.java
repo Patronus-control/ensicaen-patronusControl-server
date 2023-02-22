@@ -8,6 +8,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.EnumMap;
+import java.util.Map;
+
 @Getter
 @Setter
 @Entity
@@ -55,14 +58,25 @@ public abstract class ObjectAttributeEntity {
         return ret;
     }
 
-    abstract protected void udpateState();
-
-    public void setState() {
-
+    public void setState(Object state) {
         if(objectAttributeEntity != null) {
-            objectAttributeEntity.setState();
+            objectAttributeEntity.setState(state);
         }
     }
 
+    public abstract Object getState();
 
+    public Map<Attribute, Object> getStateList() {
+        return getStateList(new EnumMap<>(Attribute.class));
+    }
+
+    public Map<Attribute, Object> getStateList(Map<Attribute, Object> ret) {
+        ret.put(this.attribute, this.getState());
+
+        if (this.objectAttributeEntity == null) {
+            return ret;
+        } else {
+            return this.objectAttributeEntity.getStateList(ret);
+        }
+    }
 }

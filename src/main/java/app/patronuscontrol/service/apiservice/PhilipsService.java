@@ -1,5 +1,6 @@
 package app.patronuscontrol.service.apiservice;
 
+import app.patronuscontrol.entity.object.attribute.enums.Attribute;
 import app.patronuscontrol.model.contract.philips.HueLight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,16 @@ public class PhilipsService extends BasicApiService{
     public PhilipsService(@Value("${philips.endpoint}") String endpoint, @Value("${philips.auth-token}") String authToken) {
         this.endpoint = endpoint;
         this.authToken = authToken;
+    }
+
+    public void initializeNetworkObjects() {
+        try {
+            List<HueLight> allLights = getAllLights();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     public List<HueLight> getAllLights() throws IOException, InterruptedException, JSONException {
@@ -43,7 +54,7 @@ public class PhilipsService extends BasicApiService{
     }
 
     public boolean isLightOn(int id) throws IOException, InterruptedException, JSONException {
-        return this.getLight(id).isOn();
+        return (boolean) this.getLight(id).getState(Attribute.ON_OFF);
     }
 
     public void setLightOn(int id, boolean state) throws IOException, InterruptedException {

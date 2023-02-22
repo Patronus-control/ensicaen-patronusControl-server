@@ -33,7 +33,7 @@ public class OnOffLegrand extends ObjectAttributeEntity {
     }
 
     @Override
-    protected void udpateState() {
-
+    public Object getState() {
+        return false;
     }
 }

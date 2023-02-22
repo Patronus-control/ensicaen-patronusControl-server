@@ -1,13 +1,16 @@
 package app.patronuscontrol.entity;
 
 import app.patronuscontrol.entity.object.ObjectEntity;
+import app.patronuscontrol.entity.object.attribute.enums.Attribute;
 import app.patronuscontrol.model.action.Action;
 import app.patronuscontrol.model.dto.DeviceDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -30,13 +33,13 @@ public class DeviceEntity {
 
 
     public int doAction(Action action) {
-        int nb_failed = 0;
+        int nbFailed = 0;
 
         for(ObjectEntity objectEntity: objectEntityList) {
-            nb_failed += objectEntity.doAction(action);
+            nbFailed += objectEntity.doAction(action);
         }
 
-        return nb_failed;
+        return nbFailed;
     }
 
 
@@ -49,14 +52,27 @@ public class DeviceEntity {
         return deviceDTO;
     }
 
+    public DeviceDTO toDTOStateList() {
+        return this.toDTO(true);
+    }
+
     public DeviceDTO toDTO(boolean withState) {
-        DeviceDTO deviceDTO = new DeviceDTO();
+        DeviceDTO deviceDTO = this.toDTO();
+
         if(withState) {
-            // TODO
-           // deviceDTO.setStateList(this.getStateList());
+            deviceDTO.setStateList(this.getStateList());
         }
+
         return deviceDTO;
     }
 
+    private Map<Attribute, Object> getStateList() {
+        Map<Attribute, Object> ret = new EnumMap<>(Attribute.class);
 
+        for (ObjectEntity objEntity : objectEntityList) {
+            ret.putAll(objEntity.getStateList());
+        }
+
+        return ret;
+    }
 }
