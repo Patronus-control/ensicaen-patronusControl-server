@@ -44,4 +44,6 @@ public abstract class ObjectEntity {
 
         return new EnumMap<>(Attribute.class);
     }
+
+    public abstract void fetchStateListAttributes();
 }

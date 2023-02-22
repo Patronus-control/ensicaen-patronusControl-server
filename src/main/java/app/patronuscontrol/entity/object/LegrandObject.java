@@ -20,4 +20,9 @@ public class LegrandObject extends ObjectEntity {
         legrandDTO.setIp(this.getIp());
         return legrandDTO;
     }
+
+    @Override
+    public void fetchStateListAttributes() {
+        return;
+    }
 }
