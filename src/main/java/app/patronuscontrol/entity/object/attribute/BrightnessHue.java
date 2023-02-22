@@ -5,7 +5,7 @@ import app.patronuscontrol.entity.object.ObjectEntity;
 import app.patronuscontrol.entity.object.attribute.enums.Attribute;
 import app.patronuscontrol.entity.object.attribute.enums.Brand;
 import app.patronuscontrol.model.action.Action;
-import app.patronuscontrol.model.action.OnOff;
+import app.patronuscontrol.model.action.Brightness;
 import app.patronuscontrol.service.apiservice.PhilipsService;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Transient;
@@ -15,33 +15,35 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 @Getter
 @Entity
-public class OnOffHue extends ObjectAttributeEntity {
+public class BrightnessHue extends ObjectAttributeEntity {
     @Transient
-    private boolean on;
+    private int brightness;
+
+    @Transient
+    public static final float MAX_BRIGHT = 254.0F;
 
 
-    public OnOffHue(ObjectAttributeEntity objectAttributeEntity) {
+    public BrightnessHue(ObjectAttributeEntity objectAttributeEntity) {
         super(objectAttributeEntity);
         this.setBrand(Brand.PHILIPS);
-        this.setAttribute(Attribute.ON_OFF);
+        this.setAttribute(Attribute.BRIGHTNESS);
     }
 
-    public OnOffHue() {
+    public BrightnessHue() {
         super();
         this.setBrand(Brand.PHILIPS);
-        this.setAttribute(Attribute.ON_OFF);
+        this.setAttribute(Attribute.BRIGHTNESS);
     }
-
 
     @Override
     protected boolean execute(Action action, ObjectEntity objectEntity) {
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         PhilipsService philipsService = context.getBean(PhilipsService.class);
 
-        OnOff specialisezAction = (OnOff) action;
+        Brightness specialisedAction = (Brightness) action;
 
         try {
-            philipsService.setLightOn(1, specialisezAction.isState());
+            philipsService.setBrightness(1, specialisedAction.getBrightness());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
@@ -50,12 +52,12 @@ public class OnOffHue extends ObjectAttributeEntity {
         return true;
     }
 
-    @Override
     public void setState(Object state) {
-        this.on = (boolean) state;
+        this.brightness = (int) state;
     }
 
+    @Override
     public Object getState() {
-        return on;
+        return brightness;
     }
 }

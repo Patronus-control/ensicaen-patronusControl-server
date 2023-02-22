@@ -1,5 +1,6 @@
 package app.patronuscontrol.model.contract.philips;
 
+import app.patronuscontrol.entity.object.attribute.BrightnessHue;
 import app.patronuscontrol.entity.object.attribute.ColorHue;
 import app.patronuscontrol.entity.object.attribute.ObjectAttributeEntity;
 import app.patronuscontrol.entity.object.attribute.OnOffHue;
@@ -14,12 +15,17 @@ public class HueLight extends ConcreteObject {
     int id;
 
     public HueLight(JSONObject data) throws JSONException {
-        ObjectAttributeEntity onOff = new OnOffHue();
+        OnOffHue onOff = new OnOffHue();
         onOff.setState(data.getJSONObject("state").getBoolean("on"));
 
+        BrightnessHue brightness = new BrightnessHue();
+        int bri = data.getJSONObject("state").getInt("bri");
+        brightness.setState(bri/BrightnessHue.MAX_BRIGHT);
+        onOff.setObjectAttributeEntity(brightness);
+
         if(data.getString("type").equals("Extended color light")) {
-            ObjectAttributeEntity color = new ColorHue();
-            onOff.setObjectAttributeEntity(color);
+            ColorHue color = new ColorHue();
+            brightness.setObjectAttributeEntity(color);
         }
 
         this.attribute = onOff;

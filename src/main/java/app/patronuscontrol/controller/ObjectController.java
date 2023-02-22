@@ -40,7 +40,6 @@ public class ObjectController {
         objectService.initianlize();
     }
 
-
     /**
      * Test
      */

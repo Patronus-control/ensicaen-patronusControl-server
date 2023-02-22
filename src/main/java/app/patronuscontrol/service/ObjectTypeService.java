@@ -26,8 +26,7 @@ public class ObjectTypeService {
     public void testMethod() {
         DeviceEntity device = new DeviceEntity();
 
-        OnOffHue onOffHue = new OnOffHue(null);
-        ColorHue colorHue = new ColorHue(onOffHue);
+        ColorHue colorHue = new ColorHue(null);
 
         ObjectTypeEntity lampeHUE = new ObjectTypeEntity();
 

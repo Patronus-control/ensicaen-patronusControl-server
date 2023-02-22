@@ -8,7 +8,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "attribute")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Color.class, name = "COLOR_CHANGE"),
-        @JsonSubTypes.Type(value = OnOff.class, name = "ON_OFF")
+        @JsonSubTypes.Type(value = OnOff.class, name = "ON_OFF"),
+        @JsonSubTypes.Type(value = Brightness.class, name = "BRIGHTNESS")
 })
 public abstract class Action {
 

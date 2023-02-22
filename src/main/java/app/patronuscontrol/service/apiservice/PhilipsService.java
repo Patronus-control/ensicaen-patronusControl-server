@@ -1,6 +1,7 @@
 package app.patronuscontrol.service.apiservice;
 
 import app.patronuscontrol.entity.object.HueObject;
+import app.patronuscontrol.entity.object.attribute.BrightnessHue;
 import app.patronuscontrol.entity.object.attribute.enums.Attribute;
 import app.patronuscontrol.entity.object.type.ObjectTypeEntity;
 import app.patronuscontrol.model.contract.philips.HueLight;
@@ -80,5 +81,17 @@ public class PhilipsService extends BasicApiService{
         values.put("on", state);
 
         this.sendHttpRequest(values, "/api/" + authToken + "/lights/" + id + "/state", "PUT");
+    }
+
+    public void setBrightness(int id, float state) throws IOException, InterruptedException {
+        Map<Object, Object> values = new HashMap<>();
+        int convertedBri = (int) (state * BrightnessHue.MAX_BRIGHT)/100;
+
+        if(convertedBri < 1) {
+            this.setLightOn(id, false);
+        } else {
+            values.put("bri", convertedBri);
+            this.sendHttpRequest(values, "/api/" + authToken + "/lights/" + id + "/state", "PUT");
+        }
     }
 }
