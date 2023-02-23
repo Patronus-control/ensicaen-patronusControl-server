@@ -32,6 +32,13 @@ public class ObjectController {
         return objectService.getAllObjects().stream().map(ObjectEntity::toDTO).toList();
     }
 
+    /**
+     * Init all objects from the network
+     */
+    @GetMapping(value = "/initianlize")
+    void initianlize() {
+        objectService.initianlize();
+    }
 
     /**
      * Test

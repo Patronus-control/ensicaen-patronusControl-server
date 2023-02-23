@@ -1,18 +1,40 @@
 package app.patronuscontrol.model.contract.philips;
 
+import app.patronuscontrol.entity.object.attribute.BrightnessHue;
+import app.patronuscontrol.entity.object.attribute.ColorHue;
 import app.patronuscontrol.entity.object.attribute.ObjectAttributeEntity;
 import app.patronuscontrol.entity.object.attribute.OnOffHue;
 import app.patronuscontrol.entity.object.attribute.enums.Attribute;
+import lombok.Getter;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.webjars.NotFoundException;
 
+@Getter
 public class HueLight extends ConcreteObject {
+    int id;
 
     public HueLight(JSONObject data) throws JSONException {
-        ObjectAttributeEntity onOff = new OnOffHue();
+        OnOffHue onOff = new OnOffHue();
         onOff.setState(data.getJSONObject("state").getBoolean("on"));
+
+        BrightnessHue brightness = new BrightnessHue();
+        int bri = data.getJSONObject("state").getInt("bri");
+        brightness.setState(bri/BrightnessHue.MAX_BRIGHT);
+        onOff.setObjectAttributeEntity(brightness);
+
+        if(data.getString("type").equals("Extended color light")) {
+            ColorHue color = new ColorHue();
+            brightness.setObjectAttributeEntity(color);
+        }
+
         this.attribute = onOff;
+        this.name = data.getString("name");
+    }
+
+    public HueLight(JSONObject data, int id) throws JSONException {
+        this(data);
+        this.id = id;
     }
 
     @Override

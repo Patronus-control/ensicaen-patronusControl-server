@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OnOff extends Action {
+public class Brightness extends Action {
 
-    private boolean on;
+    private float brightness;
 
     @Override
     public Attribute getAttribute() {
-        return Attribute.ON_OFF;
+        return Attribute.BRIGHTNESS;
     }
 }
