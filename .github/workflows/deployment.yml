@@ -39,5 +39,5 @@ jobs:
         run: rm -rfv /var/springApp/* && mv /home/ubuntu/actions-runner/_work/ensicaen-patronusControl-server/ensicaen-patronusControl-server/target/pc-server-0.0.1-SNAPSHOT.war /var/springApp/
       - name: setup systemd service
         run: |
-          cp springApp.service /etc/systemd/system/
+          cp /home/ubuntu/actions-runner/_work/ensicaen-patronusControl-server/ensicaen-patronusControl-server/.github/ressources/PatronusControlAPI.service /etc/systemd/system/
           systemctl daemon-reload
