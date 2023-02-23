@@ -20,7 +20,7 @@ public class HueLight extends ConcreteObject {
 
         BrightnessHue brightness = new BrightnessHue();
         int bri = data.getJSONObject("state").getInt("bri");
-        brightness.setState(bri/BrightnessHue.MAX_BRIGHT);
+        brightness.setState(Math.round(bri/BrightnessHue.MAX_BRIGHT));
         onOff.setObjectAttributeEntity(brightness);
 
         if(data.getString("type").equals("Extended color light")) {
