@@ -11,6 +11,7 @@ public abstract class ObjectDTO {
 
     private String idObjectType;
 
+    private String name;
 
     public abstract Object toEntity();
 
