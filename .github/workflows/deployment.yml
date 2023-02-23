@@ -36,7 +36,9 @@ jobs:
         run: mvn package war:war --file pom.xml
       # based on https://medium.com/geekculture/turn-your-raspberry-pi-into-a-server-to-run-your-java-spring-mvc-app-862214279587
       - name: setup var files
-        run: rm -rfv /var/springApp/* && cv /home/ubuntu/actions-runner/_work/ensicaen-patronusControl-server/ensicaen-patronusControl-server/target/pc-server-0.0.1-SNAPSHOT.war /var/springApp/
+        run: |
+          rm -rfv /var/springApp/*
+          cp /home/ubuntu/actions-runner/_work/ensicaen-patronusControl-server/ensicaen-patronusControl-server/target/pc-server-0.0.1-SNAPSHOT.war /var/springApp/
       # TODO : implement service deployment
       #- name: setup systemd service
       #  run: |
