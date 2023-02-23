@@ -15,8 +15,6 @@ jobs:
     runs-on: self-hosted
     environment: production
     steps:
-      - name: disabling patronus service
-        run: sudo systemctl stop PatronusControlAPI
       - name: checking db is up
         run: pg_isready -h localhost -p 5432
       - name: Checkout repo code
@@ -32,10 +30,8 @@ jobs:
         run: mvn package war:war --file pom.xml
       # based on https://medium.com/geekculture/turn-your-raspberry-pi-into-a-server-to-run-your-java-spring-mvc-app-862214279587
       - name: setup var files
-        run: sudo rm -rfv /var/springApp && sudo mkdir /var/springApp && sudo mv ~/pc-server-0.0.1-SNAPSHOT.war /var/springApp/
-      - name: deleting service
-        run: sudo rm -f /etc/systemd/system/patronusCtl.service
-      - name: creating service file
-        run: sudo mv .github/ressources/PatronusControlAPI.service /etc/systemd/system/
-      - name: starting service
-        run: sudo systemctl start PatronusControlAPI
+        run: rm -rfv /var/springApp/* && mv pc-server-0.0.1-SNAPSHOT.war /var/springApp/
+      - name: setup systemd service
+        run: |
+          cp springApp.service /etc/systemd/system/
+          systemctl daemon-reload
