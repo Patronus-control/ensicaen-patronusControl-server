@@ -1,7 +1,7 @@
 name: deployment to rasberry pi
 
 concurrency:
-  group: self-hosted
+  group: production
   cancel-in-progress: true
 
 on:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   build_and_packaging:
-    runs-on: rasberry-pi-antoine
+    runs-on: self-hosted
     environment: production
     steps:
       - name: disabling patronus service
