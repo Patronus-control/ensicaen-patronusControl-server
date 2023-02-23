@@ -1,7 +1,7 @@
 name: deployment to rasberry pi
 
 concurrency:
-  group: production
+  group: self-hosted
   cancel-in-progress: true
 
 on:
