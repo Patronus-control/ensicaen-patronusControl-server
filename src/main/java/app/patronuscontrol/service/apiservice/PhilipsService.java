@@ -1,7 +1,6 @@
 package app.patronuscontrol.service.apiservice;
 
 import app.patronuscontrol.entity.object.HueObject;
-import app.patronuscontrol.entity.object.attribute.BrightnessHue;
 import app.patronuscontrol.entity.object.attribute.enums.Attribute;
 import app.patronuscontrol.entity.object.type.ObjectTypeEntity;
 import app.patronuscontrol.model.contract.philips.HueLight;
@@ -16,7 +15,7 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
-public class PhilipsService extends BasicApiService{
+public class PhilipsService extends BasicApiService {
     private final String authToken;
 
     @Autowired
@@ -35,8 +34,8 @@ public class PhilipsService extends BasicApiService{
             throw new RuntimeException(e);
         }
 
-        for(HueLight light : allLights) {
-            if(objectService.getHueObject(light.getId()) == null) {
+        for (HueLight light : allLights) {
+            if (objectService.getHueObject(light.getId()) == null) {
                 ObjectTypeEntity ote = new ObjectTypeEntity();
                 ote.setObjectAttributeEntity(light.getAttribute());
                 objectService.getObjectTypeRepository().save(ote);
@@ -58,7 +57,7 @@ public class PhilipsService extends BasicApiService{
         JSONObject allData = new JSONObject(result);
         Iterator<String> i = allData.keys();
 
-        while (i.hasNext()){
+        while (i.hasNext()) {
             String key = i.next();
             ret.add(new HueLight(allData.getJSONObject(key), Integer.parseInt(key)));
         }
@@ -83,15 +82,15 @@ public class PhilipsService extends BasicApiService{
         this.sendHttpRequest(values, "/api/" + authToken + "/lights/" + id + "/state", "PUT");
     }
 
-    public void setBrightness(int id, float state) throws IOException, InterruptedException {
+    public void setBrightness(int id, int state) throws IOException, InterruptedException {
         Map<Object, Object> values = new HashMap<>();
-        int convertedBri = (int) (state * BrightnessHue.MAX_BRIGHT)/100;
-
-        if(convertedBri < 1) {
+        values.put("bri", state);
+        if(state >= 1) {
+            this.setLightOn(id, true);
+        }
+        this.sendHttpRequest(values, "/api/" + authToken + "/lights/" + id + "/state", "PUT");
+        if(state < 1) {
             this.setLightOn(id, false);
-        } else {
-            values.put("bri", convertedBri);
-            this.sendHttpRequest(values, "/api/" + authToken + "/lights/" + id + "/state", "PUT");
         }
     }
 }

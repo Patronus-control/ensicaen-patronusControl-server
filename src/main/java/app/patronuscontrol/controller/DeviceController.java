@@ -30,6 +30,13 @@ public class DeviceController {
         return deviceService.getAllDevices().stream().map(DeviceEntity::toDTO).toList();
     }
 
+
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    DeviceDTO getDevice(@PathVariable Long id) {
+        return deviceService.getDevice(id).toDTO();
+    }
+
+
     /**
      * Get Device by mac address
      *
@@ -38,7 +45,7 @@ public class DeviceController {
      */
     @GetMapping(value = "/macAddr/{macAddr}", produces = MediaType.APPLICATION_JSON_VALUE)
     DeviceDTO getDeviceByMacAddr(@PathVariable String macAddr) {
-        return deviceService.findByMacAddr(macAddr).map(DeviceEntity::toDTO).orElse(null);
+        return deviceService.findByMacAddr(macAddr).map(DeviceEntity::toDTOStateList).orElse(null);
     }
 
     /**
@@ -49,8 +56,8 @@ public class DeviceController {
      * @return Number of failed actions
      */
     @PostMapping(value = "/action/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    int doAction(@PathVariable Long id, @RequestBody Action action) {
-        return deviceService.doAction(id, action);
+    DeviceDTO doAction(@PathVariable Long id, @RequestBody Action action) {
+        return deviceService.doAction(id, action).toDTOStateList();
     }
 
     /**
@@ -61,18 +68,13 @@ public class DeviceController {
      */
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     DeviceDTO createDevice(@RequestBody DeviceDTO device) {
-        return deviceService.createDevice(device.toEntity()).toDTO();
+        return deviceService.createDevice(device).toDTO();
     }
 
 
     @GetMapping(value= "/get-object/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     Iterable<ObjectDTO> getObjects(@PathVariable Long id) {
         return deviceService.getObjects(id).stream().map(ObjectEntity::toDTO).toList();
-    }
-
-    @GetMapping(value= "/get-device-state-list/{macAddr}", produces = MediaType.APPLICATION_JSON_VALUE)
-    DeviceDTO getDeviceStateList(@PathVariable String macAddr) {
-        return deviceService.findByMacAddr(macAddr).map(DeviceEntity::toDTOStateList).orElse(null);
     }
 
 

@@ -1,22 +1,21 @@
 package app.patronuscontrol.model.dto.object;
 
-import lombok.Getter;
-import lombok.Setter;
+import app.patronuscontrol.entity.object.ObjectEntity;
+import lombok.*;
 
 @Getter
 @Setter
-public abstract class ObjectDTO {
+@NoArgsConstructor
+@AllArgsConstructor
+public class ObjectDTO {
 
     private Long id;
 
     private String idObjectType;
 
 
-    public abstract Object toEntity();
-
-
-
-
-
+     public ObjectEntity toEntity() {
+         return null;
+     }
 
 }

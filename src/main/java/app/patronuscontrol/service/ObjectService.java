@@ -1,10 +1,8 @@
 package app.patronuscontrol.service;
 
-import app.patronuscontrol.entity.DeviceEntity;
 import app.patronuscontrol.entity.object.HueObject;
 import app.patronuscontrol.entity.object.ObjectEntity;
 import app.patronuscontrol.entity.object.type.ObjectTypeEntity;
-import app.patronuscontrol.model.dto.object.HueObjectDTO;
 import app.patronuscontrol.repository.ObjectRepository;
 import app.patronuscontrol.repository.ObjectTypeRepository;
 import app.patronuscontrol.service.apiservice.BasicApiService;
@@ -62,7 +60,7 @@ public class ObjectService {
         }
     }
 
-    public void initianlize() {
+    public void initialize() {
         basicApiService.initialize(this);
     }
 }

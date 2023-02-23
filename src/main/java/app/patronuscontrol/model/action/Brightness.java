@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Brightness extends Action {
 
-    private float brightness;
+    private int brightness;
 
     @Override
     public Attribute getAttribute() {

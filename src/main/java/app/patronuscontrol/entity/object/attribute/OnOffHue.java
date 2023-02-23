@@ -42,7 +42,7 @@ public class OnOffHue extends ObjectAttributeEntity {
         OnOff specialisezAction = (OnOff) action;
 
         try {
-            philipsService.setLightOn(((HueObject) objectEntity).getHueId(), specialisezAction.isState());
+            philipsService.setLightOn(((HueObject) objectEntity).getHueId(), specialisezAction.isOn());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
