@@ -18,6 +18,7 @@ public class LegrandObject extends ObjectEntity {
         LegrandDTO legrandDTO = new LegrandDTO();
         legrandDTO.setId(this.getId());
         legrandDTO.setIp(this.getIp());
+        legrandDTO.setName(this.getName());
         return legrandDTO;
     }
 

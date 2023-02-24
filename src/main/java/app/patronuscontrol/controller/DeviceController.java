@@ -77,6 +77,11 @@ public class DeviceController {
         return deviceService.getObjects(id).stream().map(ObjectEntity::toDTO).toList();
     }
 
+    @GetMapping(value= "/get-device-state-list/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    DeviceDTO getDeviceStateList(@PathVariable Long id) {
+        return deviceService.findById(id).map(DeviceEntity::toDTOStateList).orElse(null);
+    }
+
 
     @PostMapping(value= "/add-object/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     void addObject(@PathVariable Long id, @RequestBody Long objectID) {

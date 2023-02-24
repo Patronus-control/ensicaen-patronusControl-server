@@ -13,6 +13,7 @@ public class ObjectDTO {
 
     private String idObjectType;
 
+    private String name;
 
      public ObjectEntity toEntity() {
          return null;

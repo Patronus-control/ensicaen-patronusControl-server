@@ -27,6 +27,7 @@ public class HueObject extends ObjectEntity {
         HueObjectDTO hueObjectDTO = new HueObjectDTO();
         hueObjectDTO.setId(this.getId());
         hueObjectDTO.setHueId(this.getHueId());
+        hueObjectDTO.setName(this.getName());
         return hueObjectDTO;
     }
 

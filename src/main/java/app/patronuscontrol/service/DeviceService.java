@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.DoubleStream;
 
 @Service
 public class DeviceService {
@@ -24,6 +26,10 @@ public class DeviceService {
 
     public Optional<DeviceEntity> findByMacAddr(String macAddr) {
         return deviceRepository.findByMacAddr(macAddr);
+    }
+
+    public Optional<DeviceEntity> findById(Long id) {
+        return deviceRepository.findById(id);
     }
 
     public DeviceEntity createDevice(DeviceDTO device) {
