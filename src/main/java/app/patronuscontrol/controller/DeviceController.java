@@ -1,19 +1,26 @@
 package app.patronuscontrol.controller;
 
+import app.patronuscontrol.PcServerApplication;
 import app.patronuscontrol.entity.DeviceEntity;
 import app.patronuscontrol.entity.object.ObjectEntity;
+import app.patronuscontrol.entity.object.raycasting.PointEntity;
 import app.patronuscontrol.model.action.Action;
 import app.patronuscontrol.model.dto.DeviceDTO;
 import app.patronuscontrol.model.dto.object.ObjectDTO;
 import app.patronuscontrol.service.DeviceService;
+import app.patronuscontrol.service.RayCastingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+
 
 @RequestMapping(value = "device")
 @RestController
 public class DeviceController {
 
     private final DeviceService deviceService;
+    @Autowired
+    private RayCastingService rayCastingService;
 
 
     public DeviceController(DeviceService deviceService) {
@@ -52,7 +59,7 @@ public class DeviceController {
      * Execute an action
      *
      * @param action Action to execute
-     * @param id Device which will execute the action
+     * @param id     Device which will execute the action
      * @return Number of failed actions
      */
     @PostMapping(value = "/action/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -72,25 +79,34 @@ public class DeviceController {
     }
 
 
-    @GetMapping(value= "/get-object/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get-object/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     Iterable<ObjectDTO> getObjects(@PathVariable Long id) {
         return deviceService.getObjects(id).stream().map(ObjectEntity::toDTO).toList();
     }
 
-    @GetMapping(value= "/get-device-state-list/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get-device-state-list/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     DeviceDTO getDeviceStateList(@PathVariable Long id) {
         return deviceService.findById(id).map(DeviceEntity::toDTOStateList).orElse(null);
     }
 
 
-    @PostMapping(value= "/add-object/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/add-object/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     void addObject(@PathVariable Long id, @RequestBody Long objectID) {
         deviceService.addObject(id, objectID);
     }
 
-    @PostMapping(value= "/remove-object/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/remove-object/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     void removeObject(@PathVariable Long id, @RequestBody Long objectID) {
         deviceService.removeObject(id, objectID);
+    }
+
+
+    @GetMapping(value = "/find-by-coordinates/{x}/{y}/{ang}", produces = MediaType.APPLICATION_JSON_VALUE)
+    DeviceDTO findByCoordinates(@PathVariable Double x, @PathVariable Double y, @PathVariable Double ang) throws InterruptedException {
+        DeviceDTO deviceDTO = rayCastingService.searchDevice(new PointEntity(x, y), ang).map(DeviceEntity::toDTO).orElse(null);
+        PcServerApplication.display.repaint();
+
+        return deviceDTO;
     }
 
 

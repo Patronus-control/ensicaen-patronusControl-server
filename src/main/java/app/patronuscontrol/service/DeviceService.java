@@ -2,6 +2,7 @@ package app.patronuscontrol.service;
 
 import app.patronuscontrol.entity.DeviceEntity;
 import app.patronuscontrol.entity.object.ObjectEntity;
+import app.patronuscontrol.entity.object.raycasting.PointEntity;
 import app.patronuscontrol.model.action.Action;
 import app.patronuscontrol.model.dto.DeviceDTO;
 import app.patronuscontrol.model.dto.object.ObjectDTO;
@@ -10,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.DoubleStream;
 
 @Service
 public class DeviceService {
@@ -75,5 +74,10 @@ public class DeviceService {
 
     public DeviceEntity getDevice(Long id) {
         return this.deviceRepository.findById(id).orElse(null);
+    }
+
+
+    public Optional<DeviceEntity> findByPointEntity(PointEntity pointEntity) {
+        return this.deviceRepository.findByPointEntity(pointEntity);
     }
 }

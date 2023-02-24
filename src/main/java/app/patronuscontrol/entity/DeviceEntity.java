@@ -2,6 +2,7 @@ package app.patronuscontrol.entity;
 
 import app.patronuscontrol.entity.object.ObjectEntity;
 import app.patronuscontrol.entity.object.attribute.enums.Attribute;
+import app.patronuscontrol.entity.object.raycasting.PointEntity;
 import app.patronuscontrol.model.action.Action;
 import app.patronuscontrol.model.dto.DeviceDTO;
 import jakarta.persistence.*;
@@ -32,6 +33,8 @@ public class DeviceEntity {
 
     @ManyToMany
     private List<ObjectEntity> objectEntityList = new ArrayList<>();
+    @OneToOne
+    private PointEntity pointEntity;
 
 
     public int doAction(Action action) {
