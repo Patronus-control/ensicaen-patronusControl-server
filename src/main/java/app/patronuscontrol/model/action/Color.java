@@ -1,21 +1,22 @@
 package app.patronuscontrol.model.action;
 
-import app.patronuscontrol.entity.Attribute;
+import app.patronuscontrol.entity.object.attribute.enums.Attribute;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
-public class Color implements Action {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Color extends Action {
 
 
-    private final int red;
-    private final int green;
-    private final int blue;
+    private int red;
+    private int green;
+    private int blue;
 
-    public Color(int red, int green, int blue) {
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
-    }
 
     @Override
     public Attribute getAttribute() {
