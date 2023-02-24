@@ -35,9 +35,9 @@ public class ObjectController {
     /**
      * Init all objects from the network
      */
-    @GetMapping(value = "/initianlize")
-    void initianlize() {
-        objectService.initianlize();
+    @GetMapping(value = "/initialize")
+    void initialize() {
+        objectService.initialize();
     }
 
     /**

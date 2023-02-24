@@ -20,7 +20,7 @@ public class BrightnessHue extends ObjectAttributeEntity {
     private int brightness;
 
     @Transient
-    public static final float MAX_BRIGHT = 254.0F;
+    public static final int MAX_BRIGHT = 254;
 
 
     public BrightnessHue(ObjectAttributeEntity objectAttributeEntity) {
@@ -41,6 +41,7 @@ public class BrightnessHue extends ObjectAttributeEntity {
         PhilipsService philipsService = context.getBean(PhilipsService.class);
 
         Brightness specialisedAction = (Brightness) action;
+        System.out.println(specialisedAction.getBrightness());
 
         try {
             philipsService.setBrightness(1, specialisedAction.getBrightness());
@@ -53,6 +54,7 @@ public class BrightnessHue extends ObjectAttributeEntity {
     }
 
     public void setState(Object state) {
+        System.out.println(state);
         this.brightness = (int) state;
     }
 

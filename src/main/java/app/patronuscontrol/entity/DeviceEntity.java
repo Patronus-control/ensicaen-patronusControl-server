@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import java.util.Map;
 @Table(name = "devices", indexes = @Index(name = "macIdx", columnList = "mac_addr"))
 public class DeviceEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(name = "mac_addr", nullable = false, length = 17, unique = true)
     private String macAddr;
@@ -29,7 +31,7 @@ public class DeviceEntity {
     private byte[] icon;
 
     @ManyToMany
-    private List<ObjectEntity> objectEntityList;
+    private List<ObjectEntity> objectEntityList = new ArrayList<>();
 
 
     public int doAction(Action action) {
