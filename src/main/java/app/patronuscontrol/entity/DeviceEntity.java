@@ -22,7 +22,7 @@ public class DeviceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    @Column(name = "mac_addr", nullable = false, length = 17, unique = true)
+    @Column(name = "mac_addr", length = 17)
     private String macAddr;
 
     @Column(nullable = false, length = 100)
@@ -33,7 +33,7 @@ public class DeviceEntity {
 
     @ManyToMany
     private List<ObjectEntity> objectEntityList = new ArrayList<>();
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PointEntity pointEntity;
 
 
@@ -54,6 +54,9 @@ public class DeviceEntity {
         deviceDTO.setMacAddr(this.macAddr);
         deviceDTO.setName(this.name);
         deviceDTO.setIcon(this.icon);
+        if(this.pointEntity != null) {
+            deviceDTO.setPoint(this.pointEntity.toDTO());
+        }
         return deviceDTO;
     }
 

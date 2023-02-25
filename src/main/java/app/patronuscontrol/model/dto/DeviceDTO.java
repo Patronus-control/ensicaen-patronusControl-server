@@ -17,6 +17,8 @@ public class DeviceDTO {
 
     private Long id;
 
+    private PointDTO point;
+
     private String macAddr;
 
     private String name;
@@ -34,6 +36,9 @@ public class DeviceDTO {
         deviceEntity.setMacAddr(this.macAddr);
         deviceEntity.setName(this.name);
         deviceEntity.setIcon(this.icon);
+        if(this.point != null) {
+            deviceEntity.setPointEntity(this.point.toEntity());
+        }
         return deviceEntity;
     }
 

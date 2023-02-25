@@ -1,5 +1,6 @@
 package app.patronuscontrol.entity.object.raycasting;
 
+import app.patronuscontrol.model.dto.PointDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +25,14 @@ public class PointEntity {
 	public PointEntity(double x, double y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public PointDTO toDTO() {
+		PointDTO pointDTO = new PointDTO();
+		pointDTO.setId(this.id);
+		pointDTO.setX(this.x);
+		pointDTO.setY(this.y);
+		return pointDTO;
 	}
 
 }
