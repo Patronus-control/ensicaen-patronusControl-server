@@ -2,6 +2,7 @@ package app.patronuscontrol;
 
 import org.apache.catalina.connector.Connector;
 import org.apache.coyote.ajp.AbstractAjpProtocol;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
@@ -10,24 +11,21 @@ import org.springframework.context.annotation.Bean;
 import javax.swing.*;
 
 @SpringBootApplication
-public class PcServerApplication extends JFrame {
-
-
+public class PcServerApplication {
 
     public static RayCastingCanvas display;
-    public PcServerApplication() {
 
-        initUI();
-    }
+    // public PcServerApplication() {
+    //      initUI();
+    // }
 
 
     public static void main(String[] args) {
-
+        /*
         new SpringApplicationBuilder(PcServerApplication.class)
                 .headless(false).run(args);
-
-
-
+        */
+        SpringApplication.run(PcServerApplication.class, args);
     }
 
     public static void initUI() {
@@ -50,7 +48,5 @@ public class PcServerApplication extends JFrame {
         tomcat.addAdditionalTomcatConnectors(ajpConnector);
         return tomcat;
     }
-
-
 }
 

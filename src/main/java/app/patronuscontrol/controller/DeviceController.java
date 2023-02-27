@@ -104,7 +104,7 @@ public class DeviceController {
     @GetMapping(value = "/find-by-coordinates/{x}/{y}/{ang}", produces = MediaType.APPLICATION_JSON_VALUE)
     DeviceDTO findByCoordinates(@PathVariable Double x, @PathVariable Double y, @PathVariable Double ang) {
         DeviceDTO deviceDTO = rayCastingService.searchDevice(new PointEntity(x, y), ang).map(DeviceEntity::toDTO).orElse(null);
-        PcServerApplication.display.repaint();
+        // PcServerApplication.display.repaint();
 
         return deviceDTO;
     }
