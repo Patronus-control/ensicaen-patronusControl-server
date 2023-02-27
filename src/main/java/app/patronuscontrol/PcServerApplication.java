@@ -7,35 +7,15 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 
-import javax.swing.*;
 
 @SpringBootApplication
-public class PcServerApplication extends JFrame {
-
-
-
-    public static RayCastingCanvas display;
-    public PcServerApplication() {
-
-        initUI();
-    }
+public class PcServerApplication {
 
 
     public static void main(String[] args) {
 
         new SpringApplicationBuilder(PcServerApplication.class)
                 .headless(false).run(args);
-
-
-
-    }
-
-    public static void initUI() {
-        display = new RayCastingCanvas();
-        JFrame f = new JFrame();
-        f.add(display);
-        f.setSize(800, 800);
-        f.setVisible(true);
     }
 
     @Bean

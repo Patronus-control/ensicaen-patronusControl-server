@@ -1,22 +1,17 @@
 package app.patronuscontrol.service;
 
-import app.patronuscontrol.RayCastingCanvas;
 import app.patronuscontrol.entity.DeviceEntity;
 import app.patronuscontrol.entity.object.raycasting.PointEntity;
 import app.patronuscontrol.repository.PointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class RayCastingService {
 
-    public static final int TILESIZE = 10;
-
-    public static final int GRIDSIZE = 100;
     public static final float FOV = 30;
 
     @Autowired
@@ -27,10 +22,7 @@ public class RayCastingService {
 
 
     public Optional<DeviceEntity> searchDevice(PointEntity userPostion, double userAng) {
-        RayCastingCanvas.userPosition = userPostion;
-        RayCastingCanvas.rayList = new ArrayList<>();
         List<PointEntity> pointEntities = pointRepository.findAll();
-        RayCastingCanvas.deviceList = (ArrayList<PointEntity>) pointEntities;
         for (double ang = 0; ang < FOV/2    ; ang += 0.5) {
             Optional<PointEntity> optionalPointEntity = computeIntersectionPoint(userPostion, userAng + ang, pointEntities);
             if (optionalPointEntity.isPresent()) {
@@ -69,7 +61,6 @@ public class RayCastingService {
             i += 0.5;
             optionalPointEntity = pointIsInList((int) dx, (int) dy, list);
         } while (optionalPointEntity.isEmpty() && i < 50);
-        RayCastingCanvas.rayList.add(new PointEntity(dx, dy));
         return optionalPointEntity;
     }
 
